@@ -10,7 +10,7 @@ snap.PrintInfo(LoadedGraph)
 susceptible = []
 infectious = []
 removed = []
-contagionProbability = 1
+contagionProbability = 0.5
 totalTimestep = 100
 infectiousPeriod = 2
 
