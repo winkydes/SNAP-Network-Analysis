@@ -10,8 +10,8 @@ snap.PrintInfo(LoadedGraph)
 susceptible = []
 infectious = []
 removed = []
-contagionProbability = 0.5
-totalTimestep = 5
+contagionProbability = 1
+totalTimestep = 100
 infectiousPeriod = 2
 
 # infectious element with infectious period
@@ -48,7 +48,7 @@ for t in range(totalTimestep):
     # change from suceptible to infectious
     for infected in infectious:
         for x in range(LoadedGraph.GetNI(infected.id).GetOutDeg()):
-            if random.uniform(0,1) > contagionProbability:
+            if random.uniform(0,1) < contagionProbability:
                 if LoadedGraph.GetNI(infected.id).GetOutNId(x) in susceptible:
                     tempInfectious.append(LoadedGraph.GetNI(infected.id).GetOutNId(x))
                     susceptible.remove(LoadedGraph.GetNI(infected.id).GetOutNId(x))
@@ -57,14 +57,11 @@ for t in range(totalTimestep):
         infectious.append(infectedItem)
     tempInfectious.clear()
 
-    # change from infectious to removed
+    # change from infectious to removed and decrease infectious time stamp
     for infected in infectious:
         if infected.time == 0:
             removed.append(infected.id)
             infectious.remove(infected)
-    
-    # decrease infectious time stamp
-    for infected in infectious:
         infected.dec()
 
     print("At time", t+1)
