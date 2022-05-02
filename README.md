@@ -27,3 +27,6 @@ After a certain infectious time period, an infectious node could turn its state 
 
 In the project file named SIRModel.py, there are 3 lists called susceptible, infectious and removed, which contains the list of nodes that has the corresponding state.
 Users can try change the contagionProbability, infectiousTimePeriod and timeStep to see the effects it has to the network.
+
+### SIS Model
+The SIS model is very similar to the SIR model but this time instead of having the removed state, we turn infectious state back to suceptible state after the infectious time period. Hence we would expect that the spread to go on way more easier and broader given the same parameters.
