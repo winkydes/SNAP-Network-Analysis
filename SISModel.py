@@ -9,7 +9,6 @@ snap.PrintInfo(LoadedGraph)
 # constants
 susceptible = []
 infectious = []
-removed = []
 contagionProbability = 0.5
 totalTimestep = 100
 infectiousPeriod = 5
@@ -23,7 +22,8 @@ class infectedElement:
     def dec(item):
         item.time = item.time - 1
 
-# SIR model
+
+# SIS model
 
 # add all nodes into susceptible
 for NI in LoadedGraph.Nodes():
@@ -40,7 +40,6 @@ tempInfectious = []
 print("At time 0")
 print("no of sus", len(susceptible))
 print("no of inf", len(infectious))
-print("no of removed", len(removed))
 
 # perform t updates to the graph
 for t in range(totalTimestep):
@@ -57,20 +56,16 @@ for t in range(totalTimestep):
         infectious.append(infectedItem)
     tempInfectious.clear()
 
-    # change from infectious to removed and decrease infectious time stamp
+    # change from infectious to susceptible and decrease infectious time stamp
     for infected in infectious:
         if infected.time == 0:
-            removed.append(infected.id)
+            susceptible.append(infected.id)
             infectious.remove(infected)
         infected.dec()
 
     print("At time", t+1)
     print("no of sus", len(susceptible))
     print("no of inf", len(infectious))
-    print("no of removed", len(removed))
     
     
             
-
-
-
