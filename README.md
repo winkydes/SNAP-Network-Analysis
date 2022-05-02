@@ -30,3 +30,6 @@ Users can try change the contagionProbability, infectiousTimePeriod and timeStep
 
 ### SIS Model
 The SIS model is very similar to the SIR model but this time instead of having the removed state, we turn infectious state back to suceptible state after the infectious time period. Hence we would expect that the spread to go on way more easier and broader given the same parameters.
+
+### SIRS Model
+The SIRS model is again a modification to the previous models. This time after the removed state, the nodes will return to the susceptible state, where the spread could go on again. So the spread will be expected to stay longer than SIS model too.
