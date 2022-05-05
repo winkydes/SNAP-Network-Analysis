@@ -1,5 +1,12 @@
 import snap
 import random
+import pandas as pd
+from openpyxl import load_workbook
+
+book = load_workbook('SIS_model.xlsx')
+writer = pd.ExcelWriter('SIS_model.xlsx', engine='openpyxl') 
+writer.book = book
+writer.sheets = dict((ws.title, ws) for ws in book.worksheets)
 
 # load graph
 LoadedGraph = snap.LoadEdgeList(snap.PNGraph, "./facebook_combined.txt")
@@ -9,8 +16,8 @@ snap.PrintInfo(LoadedGraph)
 # constants
 susceptible = []
 infectious = []
-contagionProbability = 0.5
-totalTimestep = 100
+contagionProbability = 1
+totalTimestep = 50
 infectiousPeriod = 5
 
 # infectious element with infectious period
@@ -29,17 +36,21 @@ class infectedElement:
 for NI in LoadedGraph.Nodes():
     susceptible.append(NI.GetId())
 
+# get the node with maximum out degree
+maxOutDegNodeId = LoadedGraph.GetMxOutDegNId()
+print(maxOutDegNodeId)
+
 # generate random node id to start the transmission
-randomNodeId = random.randrange(0,LoadedGraph.GetMxNId())
-print("random node no is", randomNodeId)
-firstInfected = infectedElement(randomNodeId)
-susceptible.remove(randomNodeId)
+# randomNodeId = random.randrange(0,LoadedGraph.GetMxNId())
+# print("random node no is", randomNodeId)
+firstInfected = infectedElement(maxOutDegNodeId)
+susceptible.remove(maxOutDegNodeId)
 infectious.append(firstInfected)
 tempInfectious = []
 
-print("At time 0")
-print("no of sus", len(susceptible))
-print("no of inf", len(infectious))
+df = pd.DataFrame(columns=['susceptible','infectious'])
+data = {'susceptible': len(susceptible), 'infectious': len(infectious)}
+df.at[1, :] = data
 
 # perform t updates to the graph
 for t in range(totalTimestep):
@@ -63,9 +74,14 @@ for t in range(totalTimestep):
             infectious.remove(infected)
         infected.dec()
 
-    print("At time", t+1)
-    print("no of sus", len(susceptible))
-    print("no of inf", len(infectious))
+    data = {'susceptible': len(susceptible), 'infectious': len(infectious)}
+    df.at[t+1, :] = data
+
+print(df)
+
+df.to_excel(writer, sheet_name="p=" + str(contagionProbability))
+
+writer.save()
     
     
             
