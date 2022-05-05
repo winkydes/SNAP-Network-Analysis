@@ -16,9 +16,9 @@ snap.PrintInfo(LoadedGraph)
 # constants
 susceptible = []
 infectious = []
-contagionProbability = 1
+contagionProbability = 0.5
 totalTimestep = 50
-infectiousPeriod = 5
+infectiousPeriod = 20
 
 # infectious element with infectious period
 class infectedElement:
@@ -79,7 +79,7 @@ for t in range(totalTimestep):
 
 print(df)
 
-df.to_excel(writer, sheet_name="p=" + str(contagionProbability))
+df.to_excel(writer, sheet_name="t=" + str(infectiousPeriod))
 
 writer.save()
     
