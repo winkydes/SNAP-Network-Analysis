@@ -2,8 +2,6 @@
 
 In this project, I am using the Stanford network analysis project library in Python to apply my knowledge of SIR, SIS, and SIRS models into facebook network dataset. The aim of this project is to demonstrate how setting different parameters in the network model changes the spreading of behavior in the network.
 
-
-
 ## Running the code
 Before deploying this project, please make sure you have installed python 3.7 in your device.
 
@@ -18,6 +16,8 @@ After that run the following to see the results of the models
 ```bash
   python file-name
 ```
+All the results will be shown in a separate excel file named with the same file name. Please make sure such files exist before running the command.
+
 ## About the Epidemic Models
 ### SIR Model
 The SIR model stands for the three states in epidemic model "Suceptible", "Infectious" and "Removed".
@@ -33,3 +33,11 @@ The SIS model is very similar to the SIR model but this time instead of having t
 
 ### SIRS Model
 The SIRS model is again a modification to the previous models. This time after the removed state, the nodes will return to the susceptible state, where the spread could go on again. So the spread will be expected to stay longer than SIS model too.
+
+### Network Effect Model
+The final model in this project is to show how the network structure affects the spread of the epidemic. The file named "network_SIR" takes 200 random nodes from the network and run a SIR simulation each time, and find its stopping time. Users should expect to see a slight positive relationship between the out degree of the initial node and the time of the disease being eliminated.
+
+## Technology Used
+1. Python
+2. Pandas
+3. SNAP (and their dataset)
